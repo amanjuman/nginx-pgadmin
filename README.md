@@ -1,6 +1,6 @@
 
 # Ubuntu 18.04 + nginx + pgadmin4 (server mode + reverse proxy)
-![pgadmin](https://github.com/rbernardes/nginx-pgadmin/blob/master/pgadmin.png?raw=true)
+![pgadmin](https://github.com/amanjuman/nginx-pgadmin/blob/master/pgadmin.png?raw=true)
 
 ### Install required packages:
 ```
@@ -92,3 +92,50 @@ tcp        0      0 0.0.0.0:5050            0.0.0.0:*               LISTEN      
 ```
 
 ### Configure nginx domain (attached)
+
+server
+{
+	# Listen
+	listen 80;
+	listen [::]:80;
+	listen 443 ssl http2;
+	listen [::]:443 ssl http2;
+	
+	# Directory & Server Naming
+	server_name subdomain.example.com;
+	http2_push_preload on;
+	
+	# HTTP to HTTPS redirection
+	if ($scheme != "https")
+	{
+		return 301 https://$host$request_uri;
+	}
+
+	# SSL
+	ssl_certificate /etc/letsencrypt/live/subdomain.example.com/fullchain.pem;
+	ssl_certificate_key /etc/letsencrypt/live/subdomain.example.com/privkey.pem;
+	ssl_trusted_certificate /etc/letsencrypt/live/subdomain.example.com/fullchain.pem;
+	
+	# Disable Hidden FIle Access Except Lets Encrypt Verification
+	location ~ /\.well-known 
+	{ 
+		allow all;
+	}
+
+	# Nginx Logging
+	access_log /var/log/nginx/subdomain.example.com-access.log;
+	error_log /var/log/nginx/subdomain.example.com-error.log warn;
+
+	# Max Upload Size
+	client_max_body_size 100M;
+	access_log off;
+
+	location / 
+	{
+		proxy_set_header Host $host;
+		proxy_set_header X-Real-IP $remote_addr;
+		proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+		proxy_set_header X-Forwarded-Proto https;
+		proxy_pass http://127.0.0.1:5050;
+	}
+}
