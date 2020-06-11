@@ -1,5 +1,5 @@
 
-# Ubuntu 18.04 + nginx + pgadmin4 (server mode + reverse proxy)
+# Ubuntu 18.04 + Nginx + Pgadmin4 (Server mode + Reverse Proxy)
 ![pgadmin](https://github.com/amanjuman/nginx-pgadmin/blob/master/pgadmin.png?raw=true)
 
 ### Install required packages:
@@ -50,7 +50,7 @@ NOTE: Configuring authentication for SERVER mode.
 
 Enter the email address and password to use for the initial pgAdmin user account:
 
-Email address: youremail@address
+Email address: user@domain.com
 Password:
 Retype password:
 pgAdmin 4 - Application Initialisation
@@ -66,7 +66,7 @@ sudo chown -R www-data:www-data /var/log/pgadmin4/
 
 ### Create script to start pgadmin:
 ```
-vi /usr/local/bin/pgadmin.sh
+nano /usr/local/bin/pgadmin.sh
 
 
 #!/bin/bash
@@ -92,7 +92,7 @@ tcp        0      0 0.0.0.0:5050            0.0.0.0:*               LISTEN      
 ```
 
 ### Configure nginx domain (attached)
-
+```
 server
 {
 	# Listen
@@ -139,3 +139,4 @@ server
 		proxy_pass http://127.0.0.1:5050;
 	}
 }
+```
