@@ -12,23 +12,23 @@ apt install build-essential libssl-dev libffi-dev virtualenv python-pip libpq-de
 mkdir -p /var/lib/pgadmin4/sessions
 mkdir /var/lib/pgadmin4/storage
 mkdir /var/log/pgadmin4
-chown -R rbernardes.rbernardes /var/lib/pgadmin4/
-chown -R rbernardes.rbernardes /var/log/pgadmin4/
+chown -R root.root /var/lib/pgadmin4/
+chown -R root.root /var/log/pgadmin4/
 ```
 
-### Enable virtualenv and install pgadmin (at this time 4.4.11):
+### Enable virtualenv and install pgadmin (at this time 4.22):
 ```
 virtualenv .pgadmin4
 cd .pgadmin4/
 source bin/activate
 
-wget https://ftp.postgresql.org/pub/pgadmin/pgadmin4/v4.11/pip/pgadmin4-4.11-py2.py3-none-any.whl
-pip install pgadmin4-4.11-py2.py3-none-any.whl
+wget https://ftp.postgresql.org/pub/pgadmin/pgadmin4/v4.22/pip/pgadmin4-4.22-py3-none-any.whl
+pip install pgadmin4-4.22-py3-none-any.whl
 ```
 
 ### Configure server environment:
 ```
-vi nano ~/.pgadmin4/lib/python2.7/site-packages/pgadmin4/config_local.py
+vi nano ~/.pgadmin4/lib/python3.6/site-packages/pgadmin4/config_local.py
 
 ---
 DEFAULT_SERVER = '0.0.0.0'
@@ -43,7 +43,7 @@ SERVER_MODE = True
 
 ### Setup pgadmin4:
 ```
-python lib/python2.7/site-packages/pgadmin4/setup.py
+python lib/python3.6/site-packages/pgadmin4/setup.py
 
 ---
 NOTE: Configuring authentication for SERVER mode.
@@ -70,10 +70,10 @@ vi /usr/local/bin/pgadmin.sh
 
 
 #!/bin/bash
-. /home/rbernardes/.pgadmin4/bin/activate
+. /root/.pgadmin4/bin/activate
 # virtualenv is now active.
 #
-nohup python /home/rbernardes/.pgadmin4/lib/python2.7/site-packages/pgadmin4/pgAdmin4.py &
+nohup python /root/.pgadmin4/lib/python3.6/site-packages/pgadmin4/pgAdmin4.py &
 
 [SHIFT + zz to save file]
 chmod +x /usr/local/bin/pgadmin.sh
