@@ -4,7 +4,8 @@
 
 ### Install required packages:
 ```
-apt install build-essential libssl-dev libffi-dev virtualenv python-pip libpq-dev python-dev
+apt install build-essential libssl-dev libffi-dev libpq-dev python3.7 python3-pip python3-dev virtualenv
+sudo python3.7 -m pip install --upgrade pip
 ```
 
 ### Create directories/permissions:
