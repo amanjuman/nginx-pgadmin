@@ -16,19 +16,19 @@ chown -R root.root /var/lib/pgadmin4/
 chown -R root.root /var/log/pgadmin4/
 ```
 
-### Enable virtualenv and install pgadmin (at this time 4.22):
+### Enable virtualenv and install pgadmin (at this time 4.99):
 ```
 virtualenv .pgadmin4
 cd .pgadmin4/
 source bin/activate
 
-wget https://ftp.postgresql.org/pub/pgadmin/pgadmin4/v4.22/pip/pgadmin4-4.22-py3-none-any.whl
-pip install pgadmin4-4.22-py3-none-any.whl
+wget https://ftp.postgresql.org/pub/pgadmin/pgadmin4/v4.9/pip/pgadmin4-4.9-py2.py3-none-any.whl
+pip3 install pgadmin4-4.9-py2.py3-none-any.whl
 ```
 
 ### Configure server environment:
 ```
-vi nano ~/.pgadmin4/lib/python3.6/site-packages/pgadmin4/config_local.py
+nano ~/.pgadmin4/lib/python3.7/site-packages/pgadmin4/config_local.py
 
 ---
 DEFAULT_SERVER = '0.0.0.0'
@@ -43,7 +43,7 @@ SERVER_MODE = True
 
 ### Setup pgadmin4:
 ```
-python lib/python3.6/site-packages/pgadmin4/setup.py
+python lib/python3.7/site-packages/pgadmin4/setup.py
 
 ---
 NOTE: Configuring authentication for SERVER mode.
@@ -73,7 +73,7 @@ nano /usr/local/bin/pgadmin.sh
 . /root/.pgadmin4/bin/activate
 # virtualenv is now active.
 #
-nohup python /root/.pgadmin4/lib/python3.6/site-packages/pgadmin4/pgAdmin4.py &
+nohup python /root/.pgadmin4/lib/python3.7/site-packages/pgadmin4/pgAdmin4.py &
 
 [SHIFT + zz to save file]
 chmod +x /usr/local/bin/pgadmin.sh
